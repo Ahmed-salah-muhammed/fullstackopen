@@ -42,7 +42,7 @@ weather-app
 You can view the project here:
 
 **Website:**
-[https://vhmedsalah.netlify.app]
+https://weathercoom.netlify.app/
 
 ## 📬 Contact
 
@@ -51,3 +51,4 @@ You can view the project here:
 Email: [ahmedsalah219013@gmail.com](mailto:ahmedsalah219013@gmail.com)
 GitHub: https://github.com/Ahmed-salah-muhammed
 Portfolio: https://ahmed219013.my.canva.site/
+website: https://vhmedsalah.netlify.app
