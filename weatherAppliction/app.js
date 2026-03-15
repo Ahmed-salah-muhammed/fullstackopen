@@ -14,7 +14,7 @@ async function getWeather(query) {
     );
 
     const data = await res.json();
-
+    // console.log(data);
     loading.classList.add("hidden");
 
     if (data.error) {
@@ -43,10 +43,10 @@ function displayWeather(data) {
 
   document.querySelector("#city").textContent = data.location.name;
   document.querySelector("#temp").textContent = `${data.current.temp_c} °C`;
+  document.querySelector("#temp2").textContent = `${data.current.temp_f} °F`;
   document.querySelector("#condition").textContent =
     data.current.condition.text;
   document.querySelector("#icon").src = data.current.condition.icon;
-  console.log(data);
   changeBackground(data.current.condition.text);
 }
 
