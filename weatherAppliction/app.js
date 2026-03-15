@@ -2,7 +2,7 @@ const form = document.querySelector("#weatherForm");
 const body = document.querySelector("#body");
 const loading = document.querySelector("#loading");
 const error = document.querySelector("#error");
-const apiKey = "87d745e3de7f42f0b97220148261403";
+const apiKey = "de7b7d7cdd24488094125620261503";
 
 async function getWeather(query) {
   try {
