@@ -1,16 +1,44 @@
-# React + Vite
+# CV Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dynamic web application built with React that allows users to create and edit a professional CV in real-time. This project focuses on state management, component reusability, and a clean user interface.
 
-Currently, two official plugins are available:
+## Table of Contents
+* Overview
+* Features
+* Tech Stack
+* Project Structure
+* Installation and Setup
+* Available Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
+The CV Application is designed to simplify the process of building a resume. It features an interactive interface where users can input personal details, educational background, and professional experience, then toggle between Edit and Preview modes to see the final result instantly.
 
-## React Compiler
+## Features
+* General Information: Input fields for name, email, and phone number.
+* Educational Experience: Add school names, titles of study, and dates of study.
+* Practical Experience: Add company names, position titles, main tasks, and duration of employment.
+* Edit/Submit Toggle: Seamlessly switch between editing data and viewing the formatted output.
+* Responsive Design: Optimized for both desktop and mobile viewing.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
+* Frontend: React.js
+* Build Tool: Vite
+* Styling: CSS3
+* Linting: ESLint
 
-## Expanding the ESLint configuration
+## Project Structure
+The project follows a modular component-based architecture:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+CVApplication/
+├── public/              # Static assets (icons, etc.)
+├── src/
+│   ├── assets/          # Images and global styles
+│   ├── components/      # Reusable UI components (Input, Button, Section)
+│   ├── App.jsx          # Main application logic and state
+│   ├── main.jsx         # Entry point
+│   └── index.css        # Global CSS
+├── eslint.config.js     # Linting rules
+├── index.html           # Main HTML template
+├── package.json         # Project dependencies and scripts
+└── vite.config.js       # Vite configuration
