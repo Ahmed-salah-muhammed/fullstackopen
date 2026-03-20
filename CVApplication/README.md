@@ -34,7 +34,7 @@ CVApplication/
 ├── public/              # Static assets (icons, etc.)
 ├── src/
 │   ├── assets/          # Images and global styles
-│   ├── components/      # Reusable UI components (Input, Button, Section)
+│   ├── components/     # Reusable UI components (Input, Button, Section)
 │   ├── App.jsx          # Main application logic and state
 │   ├── main.jsx         # Entry point
 │   └── index.css        # Global CSS
@@ -42,3 +42,6 @@ CVApplication/
 ├── index.html           # Main HTML template
 ├── package.json         # Project dependencies and scripts
 └── vite.config.js       # Vite configuration
+```
+## website application
+├── https://cvbuilderappp.netlify.app/ 
