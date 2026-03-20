@@ -3,6 +3,7 @@ import Education from "./components/Education";
 import Experience from "./components/Experience";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Clock from "./components/Clock";
 
 export default function App() {
   return (
