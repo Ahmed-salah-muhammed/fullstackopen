@@ -229,7 +229,7 @@ export default function Cart() {
 
               {/* CTA */}
               <button
-                onClick={() => toast('Checkout coming soon! 🎉', 'success')}
+                onClick={() => navigate('/checkout')}
                 className="w-full mt-8 signature-gradient text-white py-4 rounded-xl
                            font-bold tracking-wide text-sm transition-all
                            hover:opacity-90 active:scale-[0.98]"
