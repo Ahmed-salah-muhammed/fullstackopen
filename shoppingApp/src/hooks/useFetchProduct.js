@@ -1,14 +1,7 @@
-// src/hooks/useFetchProduct.js
 import { useState, useEffect } from 'react'
 import { fetchProduct } from '../services/api'
 
-/**
- * Custom hook that fetches a single product by ID from the API.
- *
- * @param {number|string} id
- * @returns {{ product: Product|null, loading: boolean, error: string|null, refetch: () => void }}
- */
-export function useFetchProduct(id) {
+export default function useFetchProduct(id) {
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError]     = useState(null)
@@ -17,10 +10,8 @@ export function useFetchProduct(id) {
   useEffect(() => {
     if (!id) return
     let cancelled = false
-
     setLoading(true)
     setError(null)
-
     fetchProduct(id)
       .then(data => {
         if (!cancelled) {
@@ -34,13 +25,13 @@ export function useFetchProduct(id) {
           setLoading(false)
         }
       })
-
     return () => {
       cancelled = true
     }
   }, [id, tick])
 
   const refetch = () => setTick(t => t + 1)
-
   return { product, loading, error, refetch }
 }
+
+export { useFetchProduct }
