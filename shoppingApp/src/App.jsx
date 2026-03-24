@@ -1,5 +1,5 @@
-// src/App.jsx
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link as RouterLink } from 'react-router-dom'
+import { Box, Typography, Button } from '@mui/material'
 
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -7,14 +7,14 @@ import { AuthProvider }  from './context/AuthContext'
 import { CartProvider }  from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
 
-import Navbar from './components/Navbar'
-import Home   from './pages/Home'
-import Shop   from './pages/Shop'
-import ProductDetail from './pages/ProductDetail'
-import Wishlist from './pages/Wishlist'
-import Cart   from './pages/Cart'
-import Checkout from './pages/Checkout'
-import Login  from './pages/Login'
+import Navbar from './_shared/ui/Navbar'
+import Home   from './_components/HomePage'
+import Shop   from './_components/ShopPage'
+import ProductDetail from './_components/ProductDetails'
+import Wishlist from './_components/WishlistPage'
+import Cart   from './_components/CartPage'
+import Checkout from './_components/CheckoutPage'
+import Login  from './_components/AuthPage'
 
 import './styles/global.css'
 
@@ -34,11 +34,58 @@ function AppProviders({ children }) {
   )
 }
 
+function NotFound() {
+  return (
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 4,
+        px: 4,
+        bgcolor: 'background.default'
+      }}
+    >
+      <Typography
+        variant="h1"
+        sx={{
+          fontSize: { xs: '6rem', md: '12rem' },
+          fontWeight: 900,
+          letterSpacing: '-0.05em',
+          color: 'surface.containerHighest',
+          lineHeight: 1
+        }}
+      >
+        404
+      </Typography>
+      <Typography
+        variant="h4"
+        sx={{ fontWeight: 800, letterSpacing: '-0.02em', color: 'text.primary' }}
+      >
+        Page not found
+      </Typography>
+      <Typography variant="body1" sx={{ color: 'text.secondary', mb: 2 }}>
+        The piece you're looking for has moved or no longer exists.
+      </Typography>
+      <Button
+        component={RouterLink}
+        to="/"
+        variant="contained"
+        size="large"
+        sx={{ px: 6, py: 2 }}
+      >
+        RETURN TO ATELIER
+      </Button>
+    </Box>
+  )
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <AppProviders>
-        {/* Navbar renders announcement bar + sticky glass header internally */}
         <Navbar />
 
         <Routes>
@@ -51,36 +98,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
 
           {/* 404 */}
-          <Route
-            path="*"
-            element={
-              <div
-                className="min-h-screen flex flex-col items-center justify-center gap-6 px-8"
-                style={{ backgroundColor: 'var(--color-surface)' }}
-              >
-                <p
-                  className="text-8xl font-black tracking-tighter"
-                  style={{ color: 'var(--color-surface-container-highest)' }}
-                >
-                  404
-                </p>
-                <p
-                  className="text-2xl font-bold tracking-tight"
-                  style={{ color: 'var(--color-on-surface)' }}
-                >
-                  Page not found
-                </p>
-                <a
-                  href="/"
-                  className="signature-gradient text-white px-8 py-4 rounded-lg
-                             font-bold uppercase tracking-widest text-xs
-                             transition-all hover:opacity-90 active:scale-[0.98]"
-                >
-                  Return to Atelier
-                </a>
-              </div>
-            }
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </AppProviders>
     </BrowserRouter>

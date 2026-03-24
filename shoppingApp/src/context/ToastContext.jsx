@@ -1,41 +1,45 @@
-// src/context/ToastContext.jsx
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useMemo } from 'react'
+import { Snackbar, Alert, Typography } from '@mui/material'
 
 const ToastContext = createContext(null)
 
 export function ToastProvider({ children }) {
-  const [toasts, setToasts] = useState([])
+  const [open, setOpen] = useState(false)
+  const [toast, setToast] = useState({ msg: '', type: 'info' })
 
-  const addToast = useCallback((msg, type = 'default') => {
-    const id = Date.now()
-    setToasts(t => [...t, { id, msg, type }])
-    setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 3500)
+  const addToast = useCallback((msg, type = 'info') => {
+    setToast({ msg, type })
+    setOpen(true)
   }, [])
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return
+    setOpen(false)
+  }
 
   return (
     <ToastContext.Provider value={addToast}>
       {children}
-      <div className="fixed bottom-8 right-8 z-[9999] flex flex-col gap-2 pointer-events-none">
-        {toasts.map(t => (
-          <div
-            key={t.id}
-            className="animate-toastIn flex items-center gap-2.5 px-5 py-3.5
-                       rounded-xl text-sm font-medium max-w-xs"
-            style={{
-              backgroundColor:
-                t.type === 'success' ? '#2a7a4a' :
-                t.type === 'error'   ? '#ba1a1a' :
-                                       'var(--color-inverse-surface)',
-              color: 'var(--color-inverse-on-surface)',
-              boxShadow: '0 8px 24px rgba(19,27,46,0.15)',
-            }}
-          >
-            {t.type === 'success' && <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#fff' }}>check_circle</span>}
-            {t.type === 'error'   && <span className="material-symbols-outlined" style={{ fontSize: 16, color: '#fff' }}>cancel</span>}
-            <span style={{ color: '#fff' }}>{t.msg}</span>
-          </div>
-        ))}
-      </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={toast.type === 'default' ? 'info' : toast.type}
+          variant="filled"
+          sx={{
+            width: '100%',
+            borderRadius: '12px',
+            boxShadow: '0 8px 24px rgba(19,27,46,0.15)',
+            '& .MuiAlert-message': { fontWeight: 600, fontSize: '0.85rem' }
+          }}
+        >
+          {toast.msg}
+        </Alert>
+      </Snackbar>
     </ToastContext.Provider>
   )
 }
