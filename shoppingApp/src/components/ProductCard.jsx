@@ -1,4 +1,3 @@
-// src/components/ProductCard.jsx — Stitch "ATELIER" card style
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart }  from '../context/CartContext'
@@ -16,105 +15,91 @@ export default function ProductCard({ product }) {
   const handleAdd = (e) => {
     e.stopPropagation()
     addItem(product, qty)
-    toast(`Added "${product.title.slice(0, 30)}…" to your selection`, 'success')
+    toast(`Added "${product.title.slice(0, 20)}..." to cart`, 'success')
     setQty(1)
   }
 
   const handleWishlist = (e) => {
     e.stopPropagation()
     toggleWishlist(product)
-    const active = isInWishlist(product.id)
-    toast(active ? `Removed from wishlist` : `Added to wishlist`, 'info')
-  }
-
-  const handleNavigate = () => {
-    navigate(`/product/${product.id}`)
+    toast(isInWishlist(product.id) ? `Removed from wishlist` : `Added to wishlist`, 'info')
   }
 
   const starCount = Math.round(product.rating?.rate ?? 4)
 
   return (
     <article
-      onClick={handleNavigate}
-      className="group flex flex-col rounded-xl p-4 transition-all duration-300 cursor-pointer"
-      style={{
-        backgroundColor: 'var(--color-surface-container-low)',
-      }}
-      onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--color-surface-container-highest)'}
-      onMouseLeave={e => e.currentTarget.style.backgroundColor = 'var(--color-surface-container-low)'}
+      onClick={() => navigate(`/product/${product.id}`)}
+      className="group flex flex-col cursor-pointer bg-white transition-all duration-300 border border-transparent hover:border-outline"
     >
-      {/* Image area */}
-      <div
-        className="relative aspect-square mb-6 overflow-hidden rounded-lg flex items-center justify-center p-8"
-        style={{ backgroundColor: 'var(--color-surface-container-lowest)' }}
-      >
-        {/* Wishlist btn */}
-        <button
-          className={`absolute top-3 right-3 h-8 w-8 rounded-full flex items-center justify-center
-                     backdrop-blur transition-all duration-300 ${
-                       isInWishlist(product.id)
-                         ? 'bg-red-50 text-red-600 border border-red-200 shadow-sm'
-                         : 'bg-white/90 text-gray-400 hover:text-red-500'
-                     }`}
-          onClick={handleWishlist}
-        >
-          <span className="material-symbols-outlined" style={{ fontSize: 18, fontVariationSettings: isInWishlist(product.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
-        </button>
+      {/* Image with hover reveal actions */}
+      <div className="relative aspect-[3/4] overflow-hidden bg-surface-container flex items-center justify-center p-8">
+        {/* Badges (New/Sale) */}
+        {product.id % 3 === 0 && (
+           <span className="absolute top-4 left-4 bg-on-surface text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 z-20">New</span>
+        )}
+        {product.id % 5 === 0 && (
+           <span className="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 z-20">Sale</span>
+        )}
 
+        {/* Hover Actions */}
+        <div className="absolute top-4 right-4 flex flex-col gap-2 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 z-20">
+           <button
+             onClick={handleWishlist}
+             className="w-10 h-10 bg-white shadow-md flex items-center justify-center hover:bg-primary hover:text-white transition-colors"
+           >
+             <span className="material-symbols-outlined" style={{ fontSize: 20, fontVariationSettings: isInWishlist(product.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
+           </button>
+           <button className="w-10 h-10 bg-white shadow-md flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+             <span className="material-symbols-outlined" style={{ fontSize: 20 }}>sync</span>
+           </button>
+           <button className="w-10 h-10 bg-white shadow-md flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+             <span className="material-symbols-outlined" style={{ fontSize: 20 }}>search</span>
+           </button>
+        </div>
+
+        {/* Product Image */}
         <img
           src={product.image}
           alt={product.title}
           loading="lazy"
           className="max-h-full object-contain transition-transform duration-500 group-hover:scale-110"
         />
+
+        {/* Hover Add to Cart Button */}
+        <div className="absolute bottom-0 left-0 w-full transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
+           <button
+             onClick={handleAdd}
+             className="w-full bg-on-surface text-white py-4 font-bold uppercase tracking-[2px] text-xs hover:bg-primary transition-colors flex items-center justify-center gap-2"
+           >
+             + Add to Cart
+           </button>
+        </div>
       </div>
 
-      {/* Body */}
-      <div className="flex-1 px-2 pb-2 flex flex-col gap-4">
-        {/* Name + price */}
-        <div className="flex justify-between items-start gap-2">
-          <h3
-            className="text-sm font-semibold leading-snug line-clamp-2 flex-1 hover:text-[var(--color-primary)] transition-colors"
-            style={{ color: 'var(--color-on-surface)' }}
-          >
-            {product.title}
-          </h3>
-          <span
-            className="font-bold text-sm shrink-0 ml-2"
-            style={{ color: 'var(--color-primary)' }}
-          >
-            ${product.price.toFixed(2)}
-          </span>
+      {/* Product Info */}
+      <div className="pt-6 pb-2 px-1 flex flex-col gap-2">
+        <h3 className="text-sm font-bold uppercase tracking-tight line-clamp-1 group-hover:text-primary transition-colors">
+          {product.title}
+        </h3>
+
+        <div className="flex items-center gap-1">
+          <span className="text-amber-400 text-xs">{'★'.repeat(starCount)}{'☆'.repeat(5 - starCount)}</span>
+          <span className="text-[10px] font-bold text-on-surface-variant">(${product.rating?.count ?? 0})</span>
         </div>
 
-        {/* Category + rating */}
-        <div className="flex items-center justify-between">
-          <p
-            className="text-[10px] uppercase tracking-widest font-medium"
-            style={{ color: 'var(--color-on-surface-variant)' }}
-          >
-            {product.category}
-          </p>
-          <div className="flex items-center gap-1">
-            <span className="text-amber-400 text-xs">{'★'.repeat(starCount)}{'☆'.repeat(5 - starCount)}</span>
-            <span className="text-[10px]" style={{ color: 'var(--color-outline)' }}>
-              ({product.rating?.count ?? 0})
-            </span>
-          </div>
+        <div className="flex items-center gap-3">
+           <span className="text-lg font-black text-on-surface">${product.price.toFixed(2)}</span>
+           {product.id % 5 === 0 && (
+              <span className="text-sm text-on-surface-variant line-through font-bold">${(product.price * 1.4).toFixed(2)}</span>
+           )}
         </div>
 
-        {/* Qty + Add to Cart */}
-        <div className="flex items-center justify-between gap-3 mt-auto" onClick={e => e.stopPropagation()}>
-          <QuantityControl value={qty} onChange={setQty} size="sm" />
-          <button
-            onClick={handleAdd}
-            className="flex-1 signature-gradient text-white py-2 px-4 rounded-lg
-                       text-xs font-bold transition-transform active:scale-95
-                       hover:opacity-90"
-            style={{ boxShadow: '0 4px 12px rgba(42,20,180,0.2)' }}
-          >
-            Add to Cart
-          </button>
+        {/* Colors placeholder */}
+        <div className="flex gap-2 mt-2">
+           {['#111111', '#ebebeb', '#e53637'].map(c => (
+              <div key={c} className="w-3 h-3 rounded-full border border-outline hover:border-on-surface transition-colors cursor-pointer" style={{ backgroundColor: c }} />
+           ))}
         </div>
       </div>
     </article>

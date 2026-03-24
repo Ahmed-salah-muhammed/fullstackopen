@@ -1,159 +1,29 @@
 @import "tailwindcss";
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
-/* ── Tailwind v4 theme: Light (Indigo Slate Luxe) ── */
 @theme {
-  --font-sans: 'Inter', sans-serif;
-
-  /* Light surface stack */
-  --color-surface:                 #faf8ff;
-  --color-surface-bright:          #faf8ff;
-  --color-surface-container-lowest:#ffffff;
-  --color-surface-container-low:   #f2f3ff;
-  --color-surface-container:       #eaedff;
-  --color-surface-container-high:  #e2e7ff;
-  --color-surface-container-highest:#dae2fd;
-  --color-surface-dim:             #d2d9f4;
-  --color-surface-tint:            #5148d7;
-
-  /* Light primary / indigo */
-  --color-primary:                 #2a14b4;
-  --color-primary-container:       #4338ca;
-  --color-primary-fixed:           #e3dfff;
-  --color-primary-fixed-dim:       #c3c0ff;
-  --color-on-primary:              #ffffff;
-  --color-on-primary-fixed:        #100069;
-  --color-on-primary-fixed-variant:#372abf;
-  --color-on-primary-container:    #c1beff;
-  --color-inverse-primary:         #c3c0ff;
-
-  /* Light text */
-  --color-on-surface:              #131b2e;
-  --color-on-surface-variant:      #464554;
-  --color-on-background:           #131b2e;
-  --color-outline:                 #777586;
-  --color-outline-variant:         #c7c4d7;
-
-  /* Light secondary */
-  --color-secondary:               #515f74;
-  --color-secondary-container:     #d5e3fc;
-  --color-on-secondary:            #ffffff;
-  --color-on-secondary-container:  #57657a;
-
-  /* Status */
-  --color-error:                   #ba1a1a;
-  --color-inverse-surface:         #283044;
-  --color-inverse-on-surface:      #eef0ff;
-  --color-background:              #faf8ff;
-
-  /* Border radius per Stitch spec */
-  --radius-DEFAULT: 0.25rem;
-  --radius-lg:      0.5rem;
-  --radius-xl:      0.75rem;
-  --radius-full:    9999px;
+  --font-sans: 'Nunito Sans', sans-serif;
+  --color-primary: #e53637;
+  --color-on-primary: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-container: #f3f2ee;
+  --color-on-surface: #111111;
+  --color-on-surface-variant: #b7b7b7;
+  --color-background: #ffffff;
+  --color-outline: #ebebeb;
+  --color-error: #ff0000;
+  --radius-DEFAULT: 0px;
+  --radius-lg: 4px;
+  --radius-xl: 8px;
+  --radius-full: 9999px;
 }
 
-/* ── Dark mode overrides (data-theme=dark on <html>) ── */
 [data-theme="dark"] {
-  --color-surface:                 #0b1326;
-  --color-surface-bright:          #31394d;
-  --color-surface-container-lowest:#060e20;
-  --color-surface-container-low:   #131b2e;
-  --color-surface-container:       #171f33;
-  --color-surface-container-high:  #222a3d;
-  --color-surface-container-highest:#2d3449;
-  --color-surface-dim:             #0b1326;
-  --color-surface-tint:            #c0c1ff;
-
-  --color-primary:                 #c0c1ff;
-  --color-primary-container:       #8083ff;
-  --color-primary-fixed:           #e1e0ff;
-  --color-primary-fixed-dim:       #c0c1ff;
-  --color-on-primary:              #1000a9;
-  --color-on-primary-fixed:        #07006c;
-  --color-on-primary-fixed-variant:#2f2ebe;
-  --color-on-primary-container:    #0d0096;
-  --color-inverse-primary:         #494bd6;
-
-  --color-on-surface:              #dae2fd;
-  --color-on-surface-variant:      #c7c4d7;
-  --color-on-background:           #dae2fd;
-  --color-outline:                 #908fa0;
-  --color-outline-variant:         #464554;
-
-  --color-secondary:               #bcc7de;
-  --color-secondary-container:     #3e495d;
-  --color-on-secondary:            #263143;
-  --color-on-secondary-container:  #aeb9d0;
-
-  --color-error:                   #ffb4ab;
-  --color-inverse-surface:         #dae2fd;
-  --color-inverse-on-surface:      #283044;
-  --color-background:              #0b1326;
+  --color-surface: #111111;
+  --color-surface-container: #1a1a1a;
+  --color-on-surface: #ffffff;
+  --color-on-surface-variant: #888888;
+  --color-background: #111111;
+  --color-outline: #333333;
 }
-
-/* ── Base ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--color-surface);
-  color: var(--color-on-surface);
-  scroll-behavior: smooth;
-}
-
-body { min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; }
-img  { display: block; max-width: 100%; }
-
-/* Material Symbols */
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  vertical-align: middle;
-  font-size: 20px;
-  line-height: 1;
-  display: inline-block;
-}
-
-/* Signature gradient (primary CTA) */
-.signature-gradient {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
-}
-
-/* Glassmorphism nav */
-.glass-nav {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-/* Animations */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-12px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes pop {
-  0%  { transform: scale(0.5); }
-  60% { transform: scale(1.2); }
-  100%{ transform: scale(1); }
-}
-
-.animate-fadeUp  { animation: fadeUp  0.6s ease both; }
-.animate-slideIn { animation: slideIn 0.25s ease; }
-.animate-toastIn { animation: toastIn 0.3s ease; }
-.animate-pop     { animation: pop 0.2s ease; }
-.animate-spin    { animation: spin 0.8s linear infinite; }
-
-/* Scrollbar */
-* { scrollbar-width: thin; scrollbar-color: var(--color-outline-variant) transparent; }
