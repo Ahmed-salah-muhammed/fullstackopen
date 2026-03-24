@@ -1,11 +1,13 @@
 // src/components/Navbar.jsx
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useCart }  from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import { useAuth }  from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 
 export default function Navbar() {
   const { totalCount } = useCart()
+  const { wishlist } = useWishlist()
   const { user, logout } = useAuth()
   const { dark, toggle } = useTheme()
   const navigate = useNavigate()
@@ -52,12 +54,32 @@ export default function Navbar() {
             <nav className="hidden md:flex items-center gap-8">
               <NavLink to="/"   end className={linkCls}>Home</NavLink>
               <NavLink to="/shop"   className={linkCls}>Shop</NavLink>
+              <NavLink to="/wishlist" className={linkCls}>Wishlist</NavLink>
               <NavLink to="/cart"   className={linkCls}>Cart</NavLink>
             </nav>
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-5">
+            {/* Wishlist icon with badge */}
+            <button
+              onClick={() => navigate('/wishlist')}
+              className="relative p-1 transition-transform active:scale-95"
+              style={{ color: 'var(--color-outline)' }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: 22 }}>favorite</span>
+              {wishlist.length > 0 && (
+                <span
+                  key={wishlist.length}
+                  className="animate-pop absolute -top-1 -right-1 flex h-4 w-4 items-center
+                             justify-content-center justify-center rounded-full
+                             text-[10px] font-bold text-white bg-red-500"
+                >
+                  {wishlist.length}
+                </span>
+              )}
+            </button>
+
             {/* Cart icon with badge */}
             <button
               onClick={() => navigate('/cart')}
@@ -69,7 +91,7 @@ export default function Navbar() {
                 <span
                   key={totalCount}
                   className="animate-pop absolute -top-1 -right-1 flex h-4 w-4 items-center
-                             justify-content-center justify-center rounded-full
+                             justify-center rounded-full
                              text-[10px] font-bold text-white"
                   style={{ backgroundColor: 'var(--color-primary)' }}
                 >

@@ -5,11 +5,15 @@ import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
 import { AuthProvider }  from './context/AuthContext'
 import { CartProvider }  from './context/CartContext'
+import { WishlistProvider } from './context/WishlistContext'
 
 import Navbar from './components/Navbar'
 import Home   from './pages/Home'
 import Shop   from './pages/Shop'
+import ProductDetail from './pages/ProductDetail'
+import Wishlist from './pages/Wishlist'
 import Cart   from './pages/Cart'
+import Checkout from './pages/Checkout'
 import Login  from './pages/Login'
 
 import './styles/global.css'
@@ -20,7 +24,9 @@ function AppProviders({ children }) {
       <ToastProvider>
         <AuthProvider>
           <CartProvider>
-            {children}
+            <WishlistProvider>
+              {children}
+            </WishlistProvider>
           </CartProvider>
         </AuthProvider>
       </ToastProvider>
@@ -38,7 +44,10 @@ export default function App() {
         <Routes>
           <Route path="/"      element={<Home />}  />
           <Route path="/shop"  element={<Shop />}  />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart"  element={<Cart />}  />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
 
           {/* 404 */}

@@ -1,25 +1,42 @@
 // src/components/ProductCard.jsx — Stitch "ATELIER" card style
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCart }  from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import { useToast } from '../context/ToastContext'
 import QuantityControl from './QuantityControl'
 
 export default function ProductCard({ product }) {
   const { addItem } = useCart()
+  const { toggleWishlist, isInWishlist } = useWishlist()
   const toast = useToast()
+  const navigate = useNavigate()
   const [qty, setQty] = useState(1)
 
-  const handleAdd = () => {
+  const handleAdd = (e) => {
+    e.stopPropagation()
     addItem(product, qty)
     toast(`Added "${product.title.slice(0, 30)}…" to your selection`, 'success')
     setQty(1)
+  }
+
+  const handleWishlist = (e) => {
+    e.stopPropagation()
+    toggleWishlist(product)
+    const active = isInWishlist(product.id)
+    toast(active ? `Removed from wishlist` : `Added to wishlist`, 'info')
+  }
+
+  const handleNavigate = () => {
+    navigate(`/product/${product.id}`)
   }
 
   const starCount = Math.round(product.rating?.rate ?? 4)
 
   return (
     <article
-      className="group flex flex-col rounded-xl p-4 transition-all duration-300 cursor-default"
+      onClick={handleNavigate}
+      className="group flex flex-col rounded-xl p-4 transition-all duration-300 cursor-pointer"
       style={{
         backgroundColor: 'var(--color-surface-container-low)',
       }}
@@ -33,11 +50,15 @@ export default function ProductCard({ product }) {
       >
         {/* Wishlist btn */}
         <button
-          className="absolute top-3 right-3 h-8 w-8 rounded-full flex items-center justify-center
-                     bg-white/90 backdrop-blur text-gray-400 hover:text-red-500 transition-colors"
-          onClick={e => e.stopPropagation()}
+          className={`absolute top-3 right-3 h-8 w-8 rounded-full flex items-center justify-center
+                     backdrop-blur transition-all duration-300 ${
+                       isInWishlist(product.id)
+                         ? 'bg-red-50 text-red-600 border border-red-200 shadow-sm'
+                         : 'bg-white/90 text-gray-400 hover:text-red-500'
+                     }`}
+          onClick={handleWishlist}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: 18 }}>favorite</span>
+          <span className="material-symbols-outlined" style={{ fontSize: 18, fontVariationSettings: isInWishlist(product.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
         </button>
 
         <img
@@ -53,7 +74,7 @@ export default function ProductCard({ product }) {
         {/* Name + price */}
         <div className="flex justify-between items-start gap-2">
           <h3
-            className="text-sm font-semibold leading-snug line-clamp-2 flex-1"
+            className="text-sm font-semibold leading-snug line-clamp-2 flex-1 hover:text-[var(--color-primary)] transition-colors"
             style={{ color: 'var(--color-on-surface)' }}
           >
             {product.title}
@@ -83,7 +104,7 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Qty + Add to Cart */}
-        <div className="flex items-center justify-between gap-3 mt-auto">
+        <div className="flex items-center justify-between gap-3 mt-auto" onClick={e => e.stopPropagation()}>
           <QuantityControl value={qty} onChange={setQty} size="sm" />
           <button
             onClick={handleAdd}
