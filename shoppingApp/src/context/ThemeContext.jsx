@@ -1,5 +1,6 @@
-// src/context/ThemeContext.jsx
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useMemo } from 'react'
+import { ThemeProvider as MUIThemeProvider, CssBaseline } from '@mui/material'
+import { getAppTheme } from '../theme'
 
 const ThemeContext = createContext(null)
 
@@ -10,7 +11,6 @@ export function ThemeProvider({ children }) {
   })
 
   useEffect(() => {
-    // Set both data-theme (for our CSS vars) and class="dark" (for Tailwind dark: variant)
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
     if (dark) {
       document.documentElement.classList.add('dark')
@@ -21,9 +21,14 @@ export function ThemeProvider({ children }) {
     catch {}
   }, [dark])
 
+  const muiTheme = useMemo(() => getAppTheme(dark ? 'dark' : 'light'), [dark])
+
   return (
     <ThemeContext.Provider value={{ dark, toggle: () => setDark(d => !d) }}>
-      {children}
+      <MUIThemeProvider theme={muiTheme}>
+        <CssBaseline />
+        {children}
+      </MUIThemeProvider>
     </ThemeContext.Provider>
   )
 }
