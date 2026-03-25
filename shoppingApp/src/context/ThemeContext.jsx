@@ -6,18 +6,15 @@ const ThemeContext = createContext(null)
 
 export function ThemeProvider({ children }) {
   const [dark, setDark] = useState(() => {
-    try { return localStorage.getItem('shopwave-theme') === 'dark' }
-    catch { return false }
+    try { return localStorage.getItem('shopwave-performance-theme') === 'dark' }
+    catch { return true }
   })
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
-    if (dark) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-    try { localStorage.setItem('shopwave-theme', dark ? 'dark' : 'light') }
+    if (dark) { document.documentElement.classList.add('dark') }
+    else { document.documentElement.classList.remove('dark') }
+    try { localStorage.setItem('shopwave-performance-theme', dark ? 'dark' : 'light') }
     catch {}
   }, [dark])
 
@@ -25,14 +22,10 @@ export function ThemeProvider({ children }) {
 
   return (
     <ThemeContext.Provider value={{ dark, toggle: () => setDark(d => !d) }}>
-      <MUIThemeProvider theme={muiTheme}>
-        <CssBaseline />
-        {children}
-      </MUIThemeProvider>
+      <MUIThemeProvider theme={muiTheme}><CssBaseline />{children}</MUIThemeProvider>
     </ThemeContext.Provider>
   )
 }
-
 export function useTheme() {
   const ctx = useContext(ThemeContext)
   if (!ctx) throw new Error('useTheme must be used within ThemeProvider')

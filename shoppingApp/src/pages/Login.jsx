@@ -17,7 +17,8 @@ import {
   Google as GoogleIcon,
   Apple as AppleIcon,
   Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon
+  VisibilityOff as VisibilityOffIcon,
+  Bolt as ActionIcon
 } from '@mui/icons-material'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
@@ -36,103 +37,45 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Simulated login
     login({ name: 'Ahmed Salah', email })
-    toast('Welcome back to the Atelier', 'success')
+    toast('WELCOME BACK TO THE SQUAD.', 'success')
     navigate(from, { replace: true })
   }
 
   return (
-    <Box
-      sx={{
-        minHeight: '80vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: 'background.default',
-        py: 12
-      }}
-    >
+    <Box sx={{ minHeight: '85vh', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.default', py: 12 }}>
       <Container maxWidth="sm">
-        <Box textAlign="center" sx={{ mb: 8 }}>
-          <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: '-0.03em' }}>ATELIER</Typography>
-          <Typography variant="overline" sx={{ color: 'text.secondary', fontWeight: 800, letterSpacing: '0.2em' }}>
-            THE DIGITAL BOUTIQUE
-          </Typography>
+        <Box textAlign="center" sx={{ mb: 10, borderBottom: '10px solid', borderColor: 'primary.main', pb: 4, width: '100%' }}>
+          <Typography variant="h1" sx={{ fontWeight: 900, letterSpacing: '-0.04em' }}>SQUAD ACCESS</Typography>
+          <Typography variant="overline" sx={{ color: 'primary.main', fontWeight: 900, letterSpacing: '0.4em' }}>SHOPWAVE PERFORMANCE</Typography>
         </Box>
-
-        <Paper variant="outlined" sx={{ p: { xs: 4, md: 8 }, borderRadius: '32px' }}>
-          <Typography variant="h5" sx={{ fontWeight: 900, mb: 1, textAlign: 'center' }}>Welcome back</Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary', mb: 6, textAlign: 'center' }}>
-            Enter your credentials to access your archive.
-          </Typography>
-
+        <Paper variant="outlined" sx={{ p: { xs: 4, md: 10 }, border: '2px solid', borderColor: 'primary.main' }}>
+          <Typography variant="h4" sx={{ fontWeight: 900, mb: 2, textAlign: 'center' }}>FUEL YOUR SESSION</Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary', mb: 8, textAlign: 'center', fontWeight: 700, textTransform: 'uppercase' }}>ENTER SQUAD CREDENTIALS TO ACCESS YOUR GEAR ARCHIVE.</Typography>
           <form onSubmit={handleSubmit}>
-            <Stack spacing={4}>
+            <Stack spacing={5}>
               <Box>
-                <Typography variant="caption" sx={{ fontWeight: 800, mb: 1, display: 'block' }}>EMAIL ADDRESS</Typography>
-                <TextField
-                  fullWidth
-                  required
-                  placeholder="name@atelier.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <Typography variant="caption" sx={{ fontWeight: 900, mb: 1, display: 'block', color: 'primary.main' }}>SQUAD ID / EMAIL</Typography>
+                <TextField fullWidth required placeholder="ID@SQUAD.COM" value={email} onChange={(e) => setEmail(e.target.value)} />
               </Box>
-
               <Box>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
-                  <Typography variant="caption" sx={{ fontWeight: 800 }}>PASSWORD</Typography>
-                  <Link to="#" style={{ textDecoration: 'none', fontSize: '0.7rem', fontWeight: 900, color: '#5e5ce6' }}>Forgot Password?</Link>
+                  <Typography variant="caption" sx={{ fontWeight: 900, color: 'primary.main' }}>PASSWORD</Typography>
+                  <Link to="#" style={{ textDecoration: 'none', fontSize: '0.75rem', fontWeight: 900, color: '#ff5252' }}>LOST ID?</Link>
                 </Stack>
-                <TextField
-                  fullWidth
-                  required
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                          {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+                <TextField fullWidth required type={showPassword ? 'text' : 'password'} placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{ endAdornment: <InputAdornment position="end"><IconButton onClick={() => setShowPassword(!showPassword)} edge="end" sx={{ color: 'primary.main' }}>{showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}</IconButton></InputAdornment> }} />
               </Box>
-
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                fullWidth
-                sx={{ py: 2, fontWeight: 900 }}
-              >
-                Sign In
-              </Button>
-
-              <Divider>
-                <Typography variant="caption" sx={{ fontWeight: 800, color: 'text.disabled', px: 2 }}>OR CONTINUE WITH</Typography>
-              </Divider>
-
+              <Button type="submit" variant="contained" size="large" fullWidth startIcon={<ActionIcon />} sx={{ py: 2.5, fontWeight: 900, fontSize: '1.2rem' }}>GEAR IN</Button>
+              <Divider><Typography variant="caption" sx={{ fontWeight: 900, color: 'text.disabled', px: 2 }}>SQUAD OPTIONS</Typography></Divider>
               <Grid container spacing={2}>
-                <Grid size={6}>
-                  <Button fullWidth variant="outlined" startIcon={<GoogleIcon />} sx={{ fontWeight: 800, py: 1.5 }}>Google</Button>
-                </Grid>
-                <Grid size={6}>
-                  <Button fullWidth variant="outlined" startIcon={<AppleIcon />} sx={{ fontWeight: 800, py: 1.5 }}>Apple</Button>
-                </Grid>
+                <Grid size={6}><Button fullWidth variant="outlined" startIcon={<GoogleIcon />} sx={{ fontWeight: 900, py: 2 }}>GOOGLE</Button></Grid>
+                <Grid size={6}><Button fullWidth variant="outlined" startIcon={<AppleIcon />} sx={{ fontWeight: 900, py: 2 }}>APPLE</Button></Grid>
               </Grid>
             </Stack>
           </form>
         </Paper>
-
-        <Typography variant="body2" sx={{ mt: 6, textAlign: 'center', fontWeight: 700, color: 'text.secondary' }}>
-          New to the Atelier? <Link to="/shop" style={{ color: '#5e5ce6', textDecoration: 'none' }}>Create an account</Link>
-        </Typography>
+        <Typography variant="body2" sx={{ mt: 8, textAlign: 'center', fontWeight: 900, color: 'text.secondary', textTransform: 'uppercase' }}>NEW SQUAD MEMBER? <Link to="/shop" style={{ color: '#ff5252', textDecoration: 'none' }}>JOIN THE SQUAD</Link></Typography>
       </Container>
     </Box>
   )

@@ -1,68 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-main: #2a14b4;
-  --color-surface-containerLow: #f2f3ff;
-  --color-surface-containerHighest: #dae2fd;
+  --color-primary-main: #ff5252;
+  --color-surface-containerLow: #f0f2f5;
+  --color-surface-containerHighest: #e4e6e9;
 
-  --animate-marquee: marquee 20s linear infinite;
+  --animate-marquee: marquee 40s linear infinite;
 
   @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-100%);
-    }
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
 }
 
 :root {
-  --font-inter: "Inter", system-ui, sans-serif;
+  --font-inter: "Inter", "Roboto Condensed", system-ui, sans-serif;
   font-family: var(--font-inter);
 }
 
 body {
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Glass effect for Navbar */
-.glass-nav {
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #1a1a1a; }
+::-webkit-scrollbar-thumb { background: #333; border: 2px solid #1a1a1a; }
+::-webkit-scrollbar-thumb:hover { background: #ff5252; }
 
-/* Image Hover Effects */
-.img-hover-zoom {
-  overflow: hidden;
-}
-.img-hover-zoom img {
-  transition: transform 0.5s ease;
-}
-.img-hover-zoom:hover img {
-  transform: scale(1.1);
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #c7c4d7;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #2a14b4;
-}
-
-/* Hide arrow on number input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+::selection { background: #ff5252; color: #fff; }
