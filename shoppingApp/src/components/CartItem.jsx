@@ -1,6 +1,6 @@
 // src/components/CartItem.jsx — Stitch ATELIER cart row (no dividers, spacing as separator)
-import { useCart }  from '../../context/CartContext'
-import { useToast } from '../../context/ToastContext'
+import { useCart }  from '../context/CartContext'
+import { useToast } from '../context/ToastContext'
 import QuantityControl from './QuantityControl'
 
 export default function CartItem({ product, qty }) {
