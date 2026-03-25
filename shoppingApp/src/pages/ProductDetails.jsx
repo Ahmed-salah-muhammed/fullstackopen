@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import {
   Box,
   Container,
-  Grid,
   Typography,
   Button,
   Rating,
@@ -15,22 +14,21 @@ import {
   Tab,
   Tabs
 } from '@mui/material'
+import Grid from '@mui/material/Grid2'
 import {
   FavoriteBorder as WishlistIcon,
   Favorite as WishlistFilledIcon,
   ShoppingBagOutlined as CartIcon,
-  ChevronRight as ChevronIcon,
-  Star as StarIcon
+  ChevronRight as ChevronIcon
 } from '@mui/icons-material'
-import useFetchProduct from '../../hooks/useFetchProduct'
-import { useCart } from '../../context/CartContext'
-import { useWishlist } from '../../context/WishlistContext'
-import { useToast } from '../../context/ToastContext'
-import QuantityControl from '../Common/QuantityControl'
+import useFetchProduct from '../hooks/useFetchProduct'
+import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
+import { useToast } from '../context/ToastContext'
+import QuantityControl from '../components/QuantityControl'
 
 export default function ProductDetail() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const { product, loading, error } = useFetchProduct(id)
   const { addItem } = useCart()
   const { toggleWishlist, isInWishlist } = useWishlist()

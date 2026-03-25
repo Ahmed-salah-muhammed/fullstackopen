@@ -1,79 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', sans-serif;
+  --color-primary-main: #2a14b4;
+  --color-surface-containerLow: #f2f3ff;
+  --color-surface-containerHighest: #dae2fd;
 
-  /* The Digital Atelier Palette */
-  --color-primary: #2a14b4;
-  --color-primary-container: #4338ca;
-  --color-on-primary: #ffffff;
+  --animate-marquee: marquee 20s linear infinite;
 
-  --color-secondary: #515f74;
-
-  --color-background: #faf8ff;
-  --color-surface: #faf8ff;
-  --color-surface-container-low: #f2f3ff;
-  --color-surface-container-highest: #dae2fd;
-
-  --color-on-surface: #131b2e;
-  --color-on-surface-variant: #464554;
-
-  --color-outline-variant: #c7c4d7;
-
-  --radius-lg: 16px;
-  --radius-md: 8px;
-}
-
-[data-theme="dark"] {
-  --color-background: #131b2e;
-  --color-surface: #1c253b;
-  --color-surface-container-low: #131b2e;
-  --color-surface-container-highest: #283044;
-  --color-on-surface: #ffffff;
-  --color-on-surface-variant: #a1a1aa;
-}
-
-@layer utilities {
-  .signature-gradient {
-    background: linear-gradient(135deg, #2a14b4 0%, #4338ca 100%);
-  }
-
-  .glass-header {
-    background-color: rgba(250, 248, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-
-  [data-theme="dark"] .glass-header {
-    background-color: rgba(19, 27, 46, 0.8);
-  }
-
-  .tonal-shadow {
-    box-shadow: 0 20px 40px rgba(19, 27, 46, 0.06);
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
   }
 }
 
-/* Base style resets and global settings */
+:root {
+  --font-inter: "Inter", system-ui, sans-serif;
+  font-family: var(--font-inter);
+}
+
 body {
-  background-color: var(--color-background);
-  color: var(--color-on-surface);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
-/* Editorial Typography */
-.editorial-headline {
-  font-size: 3.5rem;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+/* Glass effect for Navbar */
+.glass-nav {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
 
-@media (max-width: 768px) {
-  .editorial-headline {
-    font-size: 2.5rem;
-  }
+/* Image Hover Effects */
+.img-hover-zoom {
+  overflow: hidden;
+}
+.img-hover-zoom img {
+  transition: transform 0.5s ease;
+}
+.img-hover-zoom:hover img {
+  transform: scale(1.1);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #c7c4d7;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a14b4;
+}
+
+/* Hide arrow on number input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

@@ -4,12 +4,12 @@ const WishlistContext = createContext()
 
 export function WishlistProvider({ children }) {
   const [wishlist, setWishlist] = useState(() => {
-    const saved = localStorage.getItem('stitch_wishlist')
+    const saved = localStorage.getItem('shopwave_wishlist')
     return saved ? JSON.parse(saved) : []
   })
 
   useEffect(() => {
-    localStorage.setItem('stitch_wishlist', JSON.stringify(wishlist))
+    localStorage.setItem('shopwave_wishlist', JSON.stringify(wishlist))
   }, [wishlist])
 
   const toggleWishlist = (product) => {

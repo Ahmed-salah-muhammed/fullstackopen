@@ -1,35 +1,38 @@
-// src/services/api.js
-// Centralised API layer — swap BASE_URL to use a different store API
-
 const BASE_URL = 'https://fakestoreapi.com'
 
-/**
- * Fetch all products
- * @returns {Promise<Product[]>}
- */
+export const api = {
+  getProducts: async (limit = null) => {
+    const url = limit ? `${BASE_URL}/products?limit=${limit}` : `${BASE_URL}/products`
+    const res = await fetch(url)
+    const data = await res.json()
+    return { data }
+  },
+  getProduct: async (id) => {
+    const res = await fetch(`${BASE_URL}/products/${id}`)
+    const data = await res.json()
+    return { data }
+  },
+  getCategories: async () => {
+    const res = await fetch(`${BASE_URL}/products/categories`)
+    const data = await res.json()
+    return { data }
+  }
+}
+
+// Named exports for compatibility
 export async function fetchProducts() {
-  const res = await fetch(`${BASE_URL}/products`)
-  if (!res.ok) throw new Error(`Failed to fetch products (${res.status})`)
-  return res.json()
+  const { data } = await api.getProducts()
+  return data
 }
 
-/**
- * Fetch a single product by id
- * @param {number} id
- * @returns {Promise<Product>}
- */
 export async function fetchProduct(id) {
-  const res = await fetch(`${BASE_URL}/products/${id}`)
-  if (!res.ok) throw new Error(`Failed to fetch product ${id} (${res.status})`)
-  return res.json()
+  const { data } = await api.getProduct(id)
+  return data
 }
 
-/**
- * Fetch all categories
- * @returns {Promise<string[]>}
- */
 export async function fetchCategories() {
-  const res = await fetch(`${BASE_URL}/products/categories`)
-  if (!res.ok) throw new Error(`Failed to fetch categories (${res.status})`)
-  return res.json()
+  const { data } = await api.getCategories()
+  return data
 }
+
+export default api

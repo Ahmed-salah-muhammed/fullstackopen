@@ -1,11 +1,13 @@
-import { Routes, Route } from 'react-router-dom'
-import Home   from '../_components/HomePage'
-import Shop   from '../_components/ShopPage'
-import ProductDetail from '../_components/ProductDetails'
-import Wishlist from '../_components/WishlistPage'
-import Cart   from '../_components/CartPage'
-import Checkout from '../_components/CheckoutPage'
-import Login  from '../_components/AuthPage'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Home   from '../pages/Home'
+import Shop   from '../pages/Shop'
+import ProductDetail from '../pages/ProductDetails'
+import Wishlist from '../pages/WishlistPage'
+import Cart   from '../pages/Cart'
+import Checkout from '../pages/Checkout'
+import Login  from '../pages/Login'
+import Profile from '../pages/Profile'
+import ProtectedRoute from '../components/ProtectedRoute'
 import { Box, Typography, Button } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -52,7 +54,7 @@ function NotFound() {
         size="large"
         sx={{ px: 6, py: 2 }}
       >
-        RETURN TO ATELIER
+        RETURN TO SHOPWAVE
       </Button>
     </Box>
   )
@@ -66,7 +68,25 @@ export default function AppRouter() {
       <Route path="/product/:id" element={<ProductDetail />} />
       <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/cart"  element={<Cart />}  />
-      <Route path="/checkout" element={<Checkout />} />
+
+      {/* Protected Routes */}
+      <Route
+        path="/checkout"
+        element={
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

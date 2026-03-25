@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useCallback, useMemo } from 'react'
-import { Snackbar, Alert, Typography } from '@mui/material'
+import { createContext, useContext, useState, useCallback } from 'react'
+import { Snackbar, Alert, Box } from '@mui/material'
 
 const ToastContext = createContext(null)
 
@@ -24,7 +24,8 @@ export function ToastProvider({ children }) {
         open={open}
         autoHideDuration={4000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }} // Top-Right relocation
+        sx={{ mt: 2, mr: 2 }}
       >
         <Alert
           onClose={handleClose}
@@ -32,9 +33,7 @@ export function ToastProvider({ children }) {
           variant="filled"
           sx={{
             width: '100%',
-            borderRadius: '12px',
-            boxShadow: '0 8px 24px rgba(19,27,46,0.15)',
-            '& .MuiAlert-message': { fontWeight: 600, fontSize: '0.85rem' }
+            '& .MuiAlert-message': { fontWeight: 700, fontSize: '0.95rem' }
           }}
         >
           {toast.msg}
