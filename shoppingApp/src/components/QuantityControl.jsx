@@ -1,17 +1,11 @@
-import { Box, IconButton, InputBase, Typography } from '@mui/material'
+import { Box, IconButton, InputBase } from '@mui/material'
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material'
 
-export default function QuantityControl({ value, onChange, min = 1, size = 'md' }) {
+export default function QuantityControl({ value, onChange, min = 1 }) {
   const handleInput = (e) => {
     const parsed = parseInt(e.target.value, 10)
     if (!isNaN(parsed)) onChange(Math.max(min, parsed))
   }
-
-  const handleBlur = (e) => {
-    if (!e.target.value || parseInt(e.target.value, 10) < min) onChange(min)
-  }
-
-  const isSmall = size === 'sm'
 
   return (
     <Box
@@ -19,41 +13,30 @@ export default function QuantityControl({ value, onChange, min = 1, size = 'md' 
         display: 'inline-flex',
         alignItems: 'center',
         bgcolor: 'surface.containerLow',
-        borderRadius: '8px',
-        px: isSmall ? 0.5 : 1,
-        py: isSmall ? 0.25 : 0.5,
-        border: '1px solid',
-        borderColor: 'outlineVariant',
-        transition: 'all 0.2s',
-        '&:hover': {
-          borderColor: 'primary.main',
-          bgcolor: 'background.paper'
-        }
+        borderRadius: '100px', // Pill style for interactive control
+        px: 1,
+        py: 0.5,
+        transition: 'all 0.3s ease',
+        '&:hover': { bgcolor: 'surface.containerHighest' }
       }}
     >
       <IconButton
         onClick={() => onChange(Math.max(min, value - 1))}
         size="small"
-        sx={{
-          p: isSmall ? 0.5 : 1,
-          color: 'text.primary',
-          '&:hover': { color: 'primary.main' }
-        }}
+        sx={{ color: 'text.primary', '&:hover': { color: 'primary.main' } }}
       >
-        <RemoveIcon sx={{ fontSize: isSmall ? 14 : 18 }} />
+        <RemoveIcon sx={{ fontSize: 16 }} />
       </IconButton>
 
       <InputBase
         value={value}
         onChange={handleInput}
-        onBlur={handleBlur}
         inputProps={{
-          'aria-label': 'quantity',
           style: {
             textAlign: 'center',
-            fontWeight: 800,
-            fontSize: isSmall ? '0.75rem' : '0.875rem',
-            width: isSmall ? 24 : 32,
+            fontWeight: 900,
+            fontSize: '0.9rem',
+            width: 35,
             padding: 0
           }
         }}
@@ -62,13 +45,9 @@ export default function QuantityControl({ value, onChange, min = 1, size = 'md' 
       <IconButton
         onClick={() => onChange(value + 1)}
         size="small"
-        sx={{
-          p: isSmall ? 0.5 : 1,
-          color: 'text.primary',
-          '&:hover': { color: 'primary.main' }
-        }}
+        sx={{ color: 'text.primary', '&:hover': { color: 'primary.main' } }}
       >
-        <AddIcon sx={{ fontSize: isSmall ? 14 : 18 }} />
+        <AddIcon sx={{ fontSize: 16 }} />
       </IconButton>
     </Box>
   )
