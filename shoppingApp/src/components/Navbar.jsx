@@ -81,16 +81,18 @@ const Navbar = () => {
       position="sticky"
       sx={{
         bgcolor: isScrolled ? 'background.paper' : 'transparent',
-        boxShadow: isScrolled ? '0 4px 30px rgba(0,0,0,0.1)' : 'none',
-        borderBottom: isScrolled ? '2px solid' : '1px solid transparent',
-        borderColor: 'primary.main',
-        transition: 'all 0.3s ease',
+        backgroundImage: 'none',
+        boxShadow: isScrolled ? '0 10px 40px rgba(0,0,0,0.05)' : 'none',
+        borderBottom: isScrolled ? '1px solid' : '1px solid transparent',
+        borderColor: 'divider',
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         top: 0,
         zIndex: 1100,
       }}
+      className={isScrolled ? 'glass-nav' : ''}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ height: { xs: 70, md: 80 } }}>
+        <Toolbar disableGutters sx={{ height: { xs: 70, md: 90 } }}>
           <Typography
             variant="h4"
             component={RouterLink}
@@ -100,25 +102,25 @@ const Navbar = () => {
               fontWeight: 900,
               letterSpacing: '-0.04em',
               textDecoration: 'none',
-              color: 'text.primary',
+              color: 'primary.main',
               mr: { md: 8 },
-              '& span': { color: 'primary.main' }
+              '& span': { color: 'secondary.main' }
             }}
           >
-            SHOPWAVE<span>.</span>
+            BARÇA<span>ATELIER.</span>
           </Typography>
 
-          <Stack direction="row" spacing={4} sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
-            {['SQUAD', 'GEAR', 'WISHLIST', 'PROFILE'].map((item) => (
+          <Stack direction="row" spacing={5} sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
+            {['STREETWEAR', 'KITS', 'WISHLIST', 'PROFILE'].map((item) => (
               <Button
                 key={item}
                 component={RouterLink}
-                to={item === 'SQUAD' ? '/' : item === 'GEAR' ? '/shop' : `/${item.toLowerCase()}`}
+                to={item === 'STREETWEAR' ? '/' : item === 'KITS' ? '/shop' : `/${item.toLowerCase()}`}
                 sx={{
                   color: 'text.primary',
-                  fontWeight: 900,
-                  fontSize: '0.8rem',
-                  letterSpacing: '0.1em',
+                  fontWeight: 800,
+                  fontSize: '0.75rem',
+                  letterSpacing: '0.12em',
                   '&:hover': { color: 'primary.main', bgcolor: 'transparent' }
                 }}
               >
@@ -132,21 +134,22 @@ const Navbar = () => {
               <Box>
                 <form onSubmit={handleSearchSubmit}>
                   <Paper
-                    variant="outlined"
                     sx={{
                       p: '4px 12px',
                       display: 'flex',
                       alignItems: 'center',
-                      width: searchOpen ? 300 : 200,
-                      borderRadius: '0px',
+                      width: searchOpen ? 300 : 220,
+                      borderRadius: '100px',
+                      bgcolor: 'surface.containerLow',
+                      border: '1px solid',
                       borderColor: searchOpen ? 'primary.main' : 'divider',
-                      transition: 'width 0.3s ease',
+                      transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                       boxShadow: 'none'
                     }}
                   >
                     <InputBase
-                      sx={{ ml: 1, flex: 1, fontSize: '0.8rem', fontWeight: 900 }}
-                      placeholder="SEARCH GEAR..."
+                      sx={{ ml: 1, flex: 1, fontSize: '0.875rem', fontWeight: 600 }}
+                      placeholder="SEARCH COLLECTION..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onFocus={() => setSearchOpen(true)}
@@ -164,19 +167,22 @@ const Navbar = () => {
                       top: '120%',
                       right: 0,
                       width: 350,
-                      borderRadius: '0px',
-                      border: '2px solid',
-                      borderColor: 'primary.main',
+                      borderRadius: '24px',
+                      overflow: 'hidden',
+                      boxShadow: '0 20px 50px rgba(0,0,0,0.1)',
+                      border: '1px solid',
+                      borderColor: 'divider',
                       zIndex: 2000
                     }}
                   >
                     <List sx={{ p: 1 }}>
                       {searchResults.map((p) => (
-                        <ListItem key={p.id} button component={RouterLink} to={`/product/${p.id}`} onClick={() => setSearchOpen(false)}>
-                          <ListItemAvatar><Avatar variant="square" src={p.image} sx={{ bgcolor: 'white' }} /></ListItemAvatar>
-                          <ListItemText primary={p.title} secondary={`$${p.price.toFixed(2)}`} primaryTypographyProps={{ variant: 'body2', fontWeight: 900, noWrap: true }} />
+                        <ListItem key={p.id} button component={RouterLink} to={`/product/${p.id}`} onClick={() => setSearchOpen(false)} sx={{ borderRadius: '16px', mb: 0.5 }}>
+                          <ListItemAvatar><Avatar variant="rounded" src={p.image} sx={{ bgcolor: 'white', '& img': { objectFit: 'contain', p: 0.5 } }} /></ListItemAvatar>
+                          <ListItemText primary={p.title} secondary={`$${p.price.toFixed(2)}`} primaryTypographyProps={{ variant: 'body2', fontWeight: 800, noWrap: true }} />
                         </ListItem>
                       ))}
+                      <Button fullWidth onClick={handleSearchSubmit} sx={{ fontSize: '0.7rem', fontWeight: 900, py: 1.5 }}>VIEW ALL RESULTS</Button>
                     </List>
                   </Paper>
                 </Fade>
@@ -187,12 +193,13 @@ const Navbar = () => {
           <Stack direction="row" spacing={1} alignItems="center">
             <IconButton onClick={toggle} sx={{ color: 'text.primary' }}>{dark ? <LightIcon /> : <DarkIcon />}</IconButton>
             <IconButton component={RouterLink} to="/wishlist" sx={{ color: 'text.primary' }}>
-              <Badge badgeContent={wishlist.length} color="primary"><WishlistIcon /></Badge>
+              <Badge badgeContent={wishlist.length} color="secondary"><WishlistIcon /></Badge>
             </IconButton>
             <IconButton component={RouterLink} to="/cart" sx={{ color: 'text.primary' }}>
               <Badge badgeContent={totalItems} color="primary"><CartIcon /></Badge>
             </IconButton>
             <IconButton component={RouterLink} to={user ? '/profile' : '/login'} sx={{ color: 'text.primary' }}><ProfileIcon /></IconButton>
+            <IconButton sx={{ display: { xs: 'flex', md: 'none' }, color: 'text.primary' }}><MenuIcon /></IconButton>
           </Stack>
         </Toolbar>
       </Container>

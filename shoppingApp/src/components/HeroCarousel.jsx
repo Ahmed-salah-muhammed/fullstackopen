@@ -10,25 +10,25 @@ import {
 
 const slides = [
   {
-    title: "UNSTOPPABLE PERFORMANCE",
-    subtitle: "THE SQUAD LINE: GEAR UP FOR THE NEW SEASON",
-    cta: "SHOP THE SQUAD",
-    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop",
-    color: "#ff5252"
-  },
-  {
-    title: "DOMINATE THE TRACK",
-    subtitle: "ENGINEERED FOR SPEED. THE 2026 SPEED ARCHIVE.",
-    cta: "EXPLORE SPEED",
+    title: "FCB ATELIER COLLECTION",
+    subtitle: "STREETWEAR DROPPING FOR CULERS GLOBALLY",
+    cta: "SHOP STREETWEAR",
     image: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2069&auto=format&fit=crop",
-    color: "#00e5ff"
+    color: "#004D98"
   },
   {
-    title: "FUEL YOUR AMBITION",
-    subtitle: "PREMIUM EQUIPMENT FOR THOSE WHO NEVER QUIT.",
+    title: "NIKE X SPOTIFY COLLAB",
+    subtitle: "ENGINEERED FOR THE CAMP NOU. AVAILABLE NOW.",
+    cta: "EXPLORE KITS",
+    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop",
+    color: "#A50044"
+  },
+  {
+    title: "THE CLUB ACCESSORIES",
+    subtitle: "OFFICIAL BARÇA GEAR VETTED FOR PERFORMANCE.",
     cta: "GET EQUIPPED",
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop",
-    color: "#fbc02d"
+    color: "#EDBB00"
   }
 ]
 
@@ -48,18 +48,34 @@ export default function HeroCarousel() {
   return (
     <Box sx={{ position: 'relative', height: { xs: '70vh', md: '90vh' }, bgcolor: '#000', overflow: 'hidden' }}>
       {slides.map((slide, i) => (
-        <Fade in={current === i} key={i} timeout={1000}>
-          <Box sx={{ position: 'absolute', inset: 0, display: current === i ? 'block' : 'none', '&::after': { content: '""', position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)' } }}>
+        <Fade in={current === i} key={i} timeout={1200}>
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              display: current === i ? 'block' : 'none',
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)'
+              }
+            }}
+          >
             <Box component="img" src={slide.image} sx={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             <Container maxWidth="xl" sx={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', zIndex: 10 }}>
               <Stack spacing={4} sx={{ maxWidth: { xs: '100%', md: '70%' } }}>
                 <Box>
-                  <Typography variant="overline" sx={{ color: slide.color, fontWeight: 900, letterSpacing: '0.4em' }}>{slide.subtitle}</Typography>
-                  <Typography variant="h1" sx={{ color: 'white', mt: 2, fontSize: { xs: '3rem', md: '6rem' } }}>{slide.title}</Typography>
+                  <Typography variant="overline" sx={{ color: '#EDBB00', fontWeight: 900, letterSpacing: '0.4em' }}>
+                    {slide.subtitle}
+                  </Typography>
+                  <Typography variant="h1" sx={{ color: 'white', mt: 2, fontSize: { xs: '3rem', md: '5.5rem' }, textShadow: '0 10px 40px rgba(0,0,0,0.4)' }}>
+                    {slide.title}
+                  </Typography>
                 </Box>
                 <Stack direction="row" spacing={3}>
-                  <Button variant="contained" size="large" component={Link} to="/shop" startIcon={<ActionIcon />} sx={{ bgcolor: slide.color, '&:hover': { bgcolor: slide.color, filter: 'brightness(1.2)' }, px: 6, py: 2.5 }}>{slide.cta}</Button>
-                  <Button variant="outlined" size="large" sx={{ color: 'white', borderColor: 'white', px: 6, py: 2.5 }}>SQUAD DETAILS</Button>
+                  <Button variant="contained" size="large" component={Link} to="/shop" sx={{ bgcolor: slide.color, px: 6, py: 2.5 }}>{slide.cta}</Button>
+                  <Button variant="outlined" size="large" sx={{ color: 'white', borderColor: 'white', px: 6, py: 2.5 }}>MÉS QUE UN CLUB</Button>
                 </Stack>
               </Stack>
             </Container>
@@ -71,7 +87,9 @@ export default function HeroCarousel() {
         <IconButton onClick={handleNext} sx={{ color: 'white', border: '2px solid rgba(255,255,255,0.2)' }}><NextIcon /></IconButton>
       </Stack>
       <Stack direction="row" spacing={2} sx={{ position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}>
-        {slides.map((_, i) => (<DotIcon key={i} sx={{ color: current === i ? 'primary.main' : 'rgba(255,255,255,0.2)', fontSize: 12, cursor: 'pointer' }} onClick={() => setCurrent(i)} />))}
+        {slides.map((_, i) => (
+          <DotIcon key={i} sx={{ color: current === i ? 'accent.main' : 'rgba(255,255,255,0.2)', fontSize: 12, cursor: 'pointer' }} onClick={() => setCurrent(i)} />
+        ))}
       </Stack>
     </Box>
   )

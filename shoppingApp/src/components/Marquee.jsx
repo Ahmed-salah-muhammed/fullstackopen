@@ -2,18 +2,18 @@ import { Box, Typography } from '@mui/material'
 
 export default function Marquee() {
   const messages = [
-    "SQUAD DROP: LIMITED PERFORMANCE GEAR AVAILABLE NOW",
-    "FREE GLOBAL SHIPPING ON ORDERS OVER $100",
-    "FUEL YOUR AMBITION | TRAIN HARDER | SHOPWAVE PERFORMANCE",
-    "JOIN THE SQUAD: MEMBERS GET 15% OFF ALL COLLECTIONS",
-    "UNSTOPPABLE TECH: EXPLORE OUR NEWEST PERFORMANCE LINE"
+    "BARÇA ATELIER: OFFICIAL 2026/27 STREETWEAR COLLECTION DROPPING SOON",
+    "FREE GLOBAL SHIPPING FOR CULERS ON ORDERS OVER $150",
+    "MÉS QUE UN CLUB | JOIN THE BARÇA ATELIER SQUAD",
+    "OFFICIAL NIKE X SPOTIFY COLLAB GEAR AVAILABLE NOW",
+    "BARÇA MEMBERS GET 15% OFF ALL ACCESSORIES & KITS"
   ]
 
   return (
     <Box
       sx={{
-        bgcolor: 'primary.main',
-        color: '#ffffff',
+        bgcolor: '#004D98',
+        color: '#EDBB00',
         py: 1.5,
         overflow: 'hidden',
         whiteSpace: 'nowrap',
@@ -26,7 +26,7 @@ export default function Marquee() {
       <Box
         sx={{
           display: 'inline-flex',
-          animation: 'marquee 40s linear infinite',
+          animation: 'marquee 35s linear infinite',
           '&:hover': { animationPlayState: 'paused' }
         }}
       >
@@ -35,7 +35,7 @@ export default function Marquee() {
             key={i}
             variant="overline"
             sx={{
-              mx: 6,
+              mx: 8,
               fontWeight: 900,
               fontSize: '0.75rem',
               letterSpacing: '0.2em',
