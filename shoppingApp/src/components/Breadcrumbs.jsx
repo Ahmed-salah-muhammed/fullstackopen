@@ -1,48 +1,53 @@
-import { Breadcrumbs as MUIBreadcrumbs, Typography, Link, Container, Box } from '@mui/material'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
-import { NavigateNext as NavigateNextIcon } from '@mui/icons-material'
+import { Breadcrumbs as MUIBreadcrumbs, Typography, Container, Box, Stack } from '@mui/material'
+import { ChevronRight as ChevronIcon, FiberManualRecord as DotIcon } from '@mui/icons-material'
 
 const Breadcrumbs = () => {
   const location = useLocation()
   const pathnames = location.pathname.split('/').filter((x) => x)
 
-  if (location.pathname === '/') return null
+  if (location.pathname === '/' || location.pathname.includes('/product/')) return null
 
   return (
-    <Box sx={{ bgcolor: 'surface.containerLow', py: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
+    <Box sx={{ bgcolor: 'surface.containerLow', py: 3, borderBottom: '1px solid', borderColor: 'divider' }}>
       <Container maxWidth="xl">
         <MUIBreadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
+          separator={<ChevronIcon sx={{ fontSize: 16, color: 'text.disabled' }} />}
           aria-label="breadcrumb"
-          sx={{ '& .MuiBreadcrumbs-li': { fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' } }}
         >
-          <Link
-            underline="hover"
-            component={RouterLink}
-            to="/"
-            color="inherit"
-            sx={{ display: 'flex', alignItems: 'center' }}
-          >
-            HOME
-          </Link>
+          <Stack direction="row" spacing={1} alignItems="center" component={RouterLink} to="/" sx={{ textDecoration: 'none', color: 'text.primary', '&:hover': { color: 'primary.main' } }}>
+             <DotIcon sx={{ fontSize: 8, color: 'secondary.main' }} />
+             <Typography variant="caption" sx={{ fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>CLUB</Typography>
+          </Stack>
           {pathnames.map((value, index) => {
             const last = index === pathnames.length - 1
             const to = `/${pathnames.slice(0, index + 1).join('/')}`
 
             return last ? (
-              <Typography color="text.primary" key={to} sx={{ fontWeight: 700, fontSize: '0.75rem' }}>
+              <Typography
+                key={to}
+                variant="caption"
+                sx={{ color: 'primary.main', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' }}
+              >
                 {value.replace(/-/g, ' ')}
               </Typography>
             ) : (
-              <Link
-                underline="hover"
+              <Typography
+                key={to}
                 component={RouterLink}
                 to={to}
-                color="inherit"
-                key={to}
+                variant="caption"
+                sx={{
+                  textDecoration: 'none',
+                  color: 'text.secondary',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  '&:hover': { color: 'primary.main' }
+                }}
               >
                 {value.replace(/-/g, ' ')}
-              </Link>
+              </Typography>
             )
           })}
         </MUIBreadcrumbs>
