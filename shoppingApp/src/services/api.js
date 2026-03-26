@@ -1,9 +1,9 @@
 const BASE_URL = 'https://fakestoreapi.com'
 
 const CATEGORY_MAP = {
-  "men's clothing": "OFFICIAL KITS (MEN)",
-  "women's clothing": "OFFICIAL KITS (WOMEN)",
-  "electronics": "BARÇA TECH & SQUAD GEAR",
+  "men's clothing": "STREETWEAR COLLECTION",
+  "women's clothing": "OFFICIAL WEAR",
+  "electronics": "BARÇA TECH & GEAR",
   "jewelery": "CLUB ACCESSORIES"
 }
 
@@ -12,33 +12,25 @@ export const api = {
     try {
       const url = limit ? `${BASE_URL}/products?limit=${limit}` : `${BASE_URL}/products`
       const res = await fetch(url)
-      if (!res.ok) throw new Error('BARÇA API OFFLINE')
+      if (!res.ok) throw new Error('API UNAVAILABLE')
       const data = await res.json()
+      // Inject "Shoes" category logic since Fakestore doesn't have it
       return {
         data: data.map(p => ({
           ...p,
-          category: CATEGORY_MAP[p.category] || p.category,
-          title: p.title.toUpperCase(),
-          image: p.id === 1 ? 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop' : p.image // Simulation
+          category: p.id % 5 === 0 ? "SQUAD FOOTWEAR" : (CATEGORY_MAP[p.category] || p.category),
+          title: p.title.toUpperCase()
         }))
       }
     } catch (err) {
-      console.error('API ERROR:', err)
       return { data: [], error: err.message }
     }
   },
   getProduct: async (id) => {
     try {
       const res = await fetch(`${BASE_URL}/products/${id}`)
-      if (!res.ok) throw new Error('KIT NOT FOUND')
       const p = await res.json()
-      return {
-        data: {
-          ...p,
-          category: CATEGORY_MAP[p.category] || p.category,
-          title: p.title.toUpperCase()
-        }
-      }
+      return { data: { ...p, category: p.id % 5 === 0 ? "SQUAD FOOTWEAR" : (CATEGORY_MAP[p.category] || p.category), title: p.title.toUpperCase() } }
     } catch (err) {
        return { data: null, error: err.message }
     }
@@ -47,7 +39,8 @@ export const api = {
     try {
       const res = await fetch(`${BASE_URL}/products/categories`)
       const data = await res.json()
-      return { data: data.map(c => CATEGORY_MAP[c] || c) }
+      const cats = data.map(c => CATEGORY_MAP[c] || c)
+      return { data: [...new Set([...cats, "SQUAD FOOTWEAR"])] }
     } catch (err) {
        return { data: [], error: err.message }
     }

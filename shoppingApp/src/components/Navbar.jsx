@@ -79,20 +79,14 @@ const Navbar = () => {
   return (
     <AppBar
       position="sticky"
+      className={isScrolled ? 'glass-header' : ''}
       sx={{
-        bgcolor: isScrolled ? 'background.paper' : 'transparent',
-        backgroundImage: 'none',
-        boxShadow: isScrolled ? '0 10px 40px rgba(0,0,0,0.05)' : 'none',
-        borderBottom: isScrolled ? '1px solid' : '1px solid transparent',
-        borderColor: 'divider',
-        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-        top: 0,
-        zIndex: 1100,
+        bgcolor: isScrolled ? 'rgba(255,255,255,0.8)' : 'transparent',
+        transition: 'all 0.4s ease',
       }}
-      className={isScrolled ? 'glass-nav' : ''}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ height: { xs: 70, md: 90 } }}>
+        <Toolbar disableGutters sx={{ height: { xs: 70, md: 100 } }}>
           <Typography
             variant="h4"
             component={RouterLink}
@@ -103,24 +97,24 @@ const Navbar = () => {
               letterSpacing: '-0.04em',
               textDecoration: 'none',
               color: 'primary.main',
-              mr: { md: 8 },
-              '& span': { color: 'secondary.main' }
+              mr: { md: 10 },
+              '& span': { color: 'accent.main' }
             }}
           >
             BARÇA<span>ATELIER.</span>
           </Typography>
 
-          <Stack direction="row" spacing={5} sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
-            {['STREETWEAR', 'KITS', 'WISHLIST', 'PROFILE'].map((item) => (
+          <Stack direction="row" spacing={6} sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
+            {['COLLECTION', 'ACCESSORIES', 'FOOTWEAR', 'PROFILE'].map((item) => (
               <Button
                 key={item}
                 component={RouterLink}
-                to={item === 'STREETWEAR' ? '/' : item === 'KITS' ? '/shop' : `/${item.toLowerCase()}`}
+                to={item === 'COLLECTION' ? '/' : item === 'PROFILE' ? '/profile' : '/shop'}
                 sx={{
                   color: 'text.primary',
                   fontWeight: 800,
-                  fontSize: '0.75rem',
-                  letterSpacing: '0.12em',
+                  fontSize: '0.7rem',
+                  letterSpacing: '0.15em',
                   '&:hover': { color: 'primary.main', bgcolor: 'transparent' }
                 }}
               >
@@ -134,22 +128,20 @@ const Navbar = () => {
               <Box>
                 <form onSubmit={handleSearchSubmit}>
                   <Paper
+                    elevation={0}
                     sx={{
-                      p: '4px 12px',
+                      p: '6px 16px',
                       display: 'flex',
                       alignItems: 'center',
-                      width: searchOpen ? 300 : 220,
+                      width: searchOpen ? 320 : 240,
                       borderRadius: '100px',
                       bgcolor: 'surface.containerLow',
-                      border: '1px solid',
-                      borderColor: searchOpen ? 'primary.main' : 'divider',
                       transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                      boxShadow: 'none'
                     }}
                   >
                     <InputBase
-                      sx={{ ml: 1, flex: 1, fontSize: '0.875rem', fontWeight: 600 }}
-                      placeholder="SEARCH COLLECTION..."
+                      sx={{ ml: 1, flex: 1, fontSize: '0.85rem', fontWeight: 600 }}
+                      placeholder="Search archive..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onFocus={() => setSearchOpen(true)}
@@ -162,27 +154,26 @@ const Navbar = () => {
 
                 <Fade in={searchOpen && searchResults.length > 0}>
                   <Paper
+                    elevation={0}
                     sx={{
                       position: 'absolute',
                       top: '120%',
                       right: 0,
-                      width: 350,
+                      width: 380,
                       borderRadius: '24px',
                       overflow: 'hidden',
-                      boxShadow: '0 20px 50px rgba(0,0,0,0.1)',
-                      border: '1px solid',
-                      borderColor: 'divider',
+                      boxShadow: '0 20px 40px rgba(19, 27, 46, 0.08)',
+                      bgcolor: 'background.paper',
                       zIndex: 2000
                     }}
                   >
-                    <List sx={{ p: 1 }}>
+                    <List sx={{ p: 2 }}>
                       {searchResults.map((p) => (
-                        <ListItem key={p.id} button component={RouterLink} to={`/product/${p.id}`} onClick={() => setSearchOpen(false)} sx={{ borderRadius: '16px', mb: 0.5 }}>
-                          <ListItemAvatar><Avatar variant="rounded" src={p.image} sx={{ bgcolor: 'white', '& img': { objectFit: 'contain', p: 0.5 } }} /></ListItemAvatar>
-                          <ListItemText primary={p.title} secondary={`$${p.price.toFixed(2)}`} primaryTypographyProps={{ variant: 'body2', fontWeight: 800, noWrap: true }} />
+                        <ListItem key={p.id} button component={RouterLink} to={`/product/${p.id}`} onClick={() => setSearchOpen(false)} sx={{ borderRadius: '16px', mb: 1 }}>
+                          <ListItemAvatar><Avatar variant="rounded" src={p.image} sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider' }} /></ListItemAvatar>
+                          <ListItemText primary={p.title} secondary={`$${p.price.toFixed(2)}`} primaryTypographyProps={{ variant: 'body2', fontWeight: 800, noWrap: true }} secondaryTypographyProps={{ variant: 'caption', fontWeight: 800, color: 'primary.main' }} />
                         </ListItem>
                       ))}
-                      <Button fullWidth onClick={handleSearchSubmit} sx={{ fontSize: '0.7rem', fontWeight: 900, py: 1.5 }}>VIEW ALL RESULTS</Button>
                     </List>
                   </Paper>
                 </Fade>

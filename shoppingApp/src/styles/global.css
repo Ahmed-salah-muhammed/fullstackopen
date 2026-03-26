@@ -1,11 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-blau: #004D98;
-  --color-grana: #A50044;
-  --color-gold: #EDBB00;
-  --color-surface-low: #f4f6ff;
-  --color-surface-high: #e8ebff;
+  --color-primary: #2a14b4;
+  --color-primary-container: #4338ca;
+  --color-surface-low: #f2f3ff;
+  --color-surface-highest: #dae2fd;
 
   --animate-marquee: marquee 35s linear infinite;
 
@@ -16,7 +15,7 @@
 }
 
 :root {
-  --font-inter: "Inter", "Outfit", "Roboto", system-ui, sans-serif;
+  --font-inter: "Inter", system-ui, sans-serif;
   font-family: var(--font-inter);
 }
 
@@ -26,47 +25,40 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Barcelona "Atelier" / "Stitch" Styling */
-.barca-gradient {
-  background: linear-gradient(135deg, #004D98 0%, #A50044 100%);
-}
-
-.gold-glow:hover {
-  filter: drop-shadow(0 0 15px rgba(237, 187, 0, 0.4));
-}
-
-/* Glass effect for Navbar */
-.glass-nav {
+/* Glass & Signature Style */
+.glass-header {
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
-/* Image Premium Hover Effects */
-.img-hover-premium {
-  overflow: hidden;
-  border-radius: 20px;
-  transition: all 0.5s ease;
+.dark .glass-header {
+  background-color: rgba(19, 19, 31, 0.8);
 }
-.img-hover-premium:hover {
-  transform: scale(1.02);
-  filter: brightness(1.05);
+
+/* No-Line Surface Definition */
+.surface-tonal {
+  background-color: #f2f3ff;
 }
-.img-hover-premium img {
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+.dark .surface-tonal {
+  background-color: #1a1a24;
 }
-.img-hover-premium:hover img {
-  transform: scale(1.1);
+
+/* Editorial Spacing */
+.editorial-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 /* Premium Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 20px; border: 2px solid transparent; background-clip: content-box; }
-::-webkit-scrollbar-thumb:hover { background: #004D98; }
+::-webkit-scrollbar-thumb:hover { background: #2a14b4; }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-::selection { background: #EDBB00; color: #000; }
+::selection { background: #c1beff; color: #100069; }

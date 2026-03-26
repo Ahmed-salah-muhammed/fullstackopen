@@ -23,20 +23,22 @@ test.beforeEach(async ({ page }) => {
 
 test('homepage renders and has correct branding', async ({ page }) => {
   await page.goto('http://localhost:5174/');
-  await expect(page.getByText('SHOPWAVE')).toBeVisible();
-  await expect(page.getByText('SUMMER ATELIER 2024')).toBeVisible();
+  await expect(page.getByText('BARÇA ATELIER')).toBeVisible();
+  await expect(page.getByText('Spotify')).toBeVisible();
 });
 
 test('navigation to shop works', async ({ page }) => {
   await page.goto('http://localhost:5174/');
-  await page.click('text=SHOP');
+  // Wait for the desktop navbar or mobile menu
+  const shopLink = page.locator('nav').getByText('SHOP', { exact: true });
+  await shopLink.first().click();
   await expect(page).toHaveURL(/.*shop/);
-  await expect(page.getByText('Collection')).toBeVisible();
+  await expect(page.getByText('THE SQUAD COLLECTION')).toBeVisible();
 });
 
 test('search functionality works', async ({ page }) => {
   await page.goto('http://localhost:5174/');
-  const searchInput = page.getByPlaceholder('Search pieces...');
+  const searchInput = page.getByPlaceholder(/Search the Atelier...|Search pieces.../);
   await searchInput.fill('Test');
   await expect(page.getByText('Test Product')).toBeVisible();
 });
